@@ -1,76 +1,54 @@
 
-// Modules - Engine, World, Bodies
-
-// Nicknames - namespacing
-
 const Engine = Matter.Engine;
-const Bodies = Matter.Bodies;
 const World = Matter.World;
+const Bodies = Matter.Bodies;
+const Body = Matter.Body;
 
-var engine, world, ground;
+var ball, ballImage;
+var bin, binImage;
+var ground;
 
-var box1, box2, box3, box4, box5;
-var pig1, pig2;
-var log1, log2, log3, log4;
-var bird;
-
-var ground_options,box_options;
-
-var backgroundImage;
-
-function preload() {
-    backgroundImage = loadImage("sprites/bg.png");
+function preload()
+{
+	
 }
 
-function setup(){
-    createCanvas(1200,400);
-
-    engine = Engine.create(); // engine = Matter.Engine.create();
-    world = engine.world;
-
-    box1 = new Box(700,320,70,70);
-    box2 = new Box(920,320,70,70);
-    box3 = new Box(700,250,70,70);
-    box4 = new Box(920,250,70,70);
-    box5 = new Box(810,150,70,70);
-
-    pig1 = new Pig(810,320);
-    pig2 = new Pig(810,250);
+function setup() {
+	createCanvas(1200, 700);
 
 
-    log1 = new Log(810,260,300,PI/2);
-    log2 = new Log(810,150,300,PI/2);
-    log3 = new Log(780,120,150,PI/7);
-    log4 = new Log(850,120,150,-PI/7);
+	engine = Engine.create();
+	world = engine.world;
 
+	//Create the Bodies Here.
+	ball = new Ball(200,450,70);
+	ground = new Ground(600,700,1200,25);
+	bin1 = new Bin(1000,650,250,20);
+	bin2 = new Bin(875,600,20,100);
+	bin3 = new Bin(1125,600,20,100);
 
-    bird = new Bird(150,50);
-
-   ground = new Ground(600,height,1200,10);
-
-    
-
-    console.log(ground);
-    console.log(box);
-
+	Engine.run(engine);
+  
 }
 
-function draw(){
-    background(backgroundImage);
-    Engine.update(engine);
-    box1.display();
-    box2.display();
-    box3.display();
-    box4.display();
-    box5.display();
-    pig1.display();
-    pig2.display();
-    log1.display();
-    log2.display();
-    log3.display();
-    log4.display();
-    bird.display();
-    ground.display();
-    
-    
+
+function draw() {
+  rectMode(CENTER);
+  background(255,255,255);
+  
+  
+  ground.display();
+  bin1.display();
+  bin2.display();
+  bin3.display();
+  ball.display();
+  drawSprites();
+ 
+}
+
+function keyPressed() {
+	if (keyCode === UP_ARROW){
+
+		Matter.Body.applyForce(ball.body,ball.body.position,{x:250,y:-250});
+	}
 }
